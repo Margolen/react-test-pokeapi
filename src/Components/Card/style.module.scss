@@ -1,12 +1,21 @@
-.cards{
+.card {
+	border: solid 1px black;
+	padding: 0 5px;
 	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
+	justify-content: space-around;
+	align-items: center;
+	width: 50%;
+	margin: 1em;
+}
+
+.card__info{
+	
 	
 }
 
 .card__title{
 font-size: 16px;
+padding-top: 10px;
 }
 
 .card__text{
@@ -14,5 +23,8 @@ font-size: 16px;
 }
 
 .card__img{
-	cursor: pointer;
+	display: block;
+	width: 208px;
+  height: 208px;
+ 	cursor: pointer;
 }

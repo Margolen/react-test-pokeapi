@@ -21,11 +21,13 @@ export function App() {
     <Router>
       <div styleName="wrapper">
         <Header />
-
-        {pokemonList.map((pokemon) => (
-          <Card key={pokemon.url} url={pokemon.url} name={pokemon.name} />
-        ))}
-
+        <main>
+          <div styleName="card__list">
+            {pokemonList.map((pokemon) => (
+              <Card key={pokemon.url} url={pokemon.url} name={pokemon.name} />
+            ))}
+          </div>
+        </main>
         <Footer />
       </div>
     </Router>
