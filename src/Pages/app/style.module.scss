@@ -1,4 +1,5 @@
-.container{
-	width: 80%;
-	margin: 0 auto;
+.wrapper{
+	min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }

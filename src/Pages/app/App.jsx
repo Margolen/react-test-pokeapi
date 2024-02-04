@@ -19,7 +19,7 @@ export function App() {
 
   return (
     <Router>
-      <div styleName="container">
+      <div styleName="wrapper">
         <Header />
 
         {pokemonList.map((pokemon) => (

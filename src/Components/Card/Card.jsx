@@ -16,10 +16,11 @@ const Card = ({ name, url }) => {
 
   return (
     pokemon && (
-      <>
-        <div styleName="card">{name}</div>
-        <div styleName="card">{pokemon.weight}</div>
-        <img styleName="card__img"
+      <div styleName="cards">
+        <h3 styleName="card__title">{name}</h3>
+        <p styleName="card__text">{pokemon.weight}</p>
+        <img
+          styleName="card__img"
           src={
             isFront
               ? pokemon.sprites.front_default
@@ -28,7 +29,7 @@ const Card = ({ name, url }) => {
           alt={name}
           onClick={() => setIsFront(!isFront)}
         />
-      </>
+      </div>
     )
   );
 };

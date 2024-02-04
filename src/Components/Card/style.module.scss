@@ -1,5 +1,16 @@
-.card{
+.cards{
 	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	
+}
+
+.card__title{
+font-size: 16px;
+}
+
+.card__text{
+	font-size: 12px;
 }
 
 .card__img{
