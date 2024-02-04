@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Card = ({ name, url }) => {
   const [pokemon, setPokemon] = useState(null);
+  const [isFront, setIsFront] = useState(true);
 
   useEffect(() => {
     axios.get(url).then((response) => {
@@ -18,7 +19,15 @@ const Card = ({ name, url }) => {
       <>
         <div styleName="card">{name}</div>
         <div styleName="card">{pokemon.weight}</div>
-        <img src={pokemon.sprites.front_default} alt={name} />
+        <img styleName="card__img"
+          src={
+            isFront
+              ? pokemon.sprites.front_default
+              : pokemon.sprites.back_default
+          }
+          alt={name}
+          onClick={() => setIsFront(!isFront)}
+        />
       </>
     )
   );
