@@ -12,6 +12,7 @@ export function App() {
 
   useEffect(() => {
     axios.get("https://pokeapi.co/api/v2/pokemon/").then((response) => {
+      console.log(response);
       setPokemonList(response.data.results);
     });
   }, [setPokemonList]);
@@ -22,7 +23,7 @@ export function App() {
         <Header />
 
         {pokemonList.map((pokemon) => (
-          <Card key={pokemon.url} pokemon={pokemon} />
+          <Card key={pokemon.url} url={pokemon.url} name={pokemon.name} />
         ))}
 
         <Footer />
