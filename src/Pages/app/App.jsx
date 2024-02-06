@@ -38,7 +38,7 @@ export function App() {
   );
 
   const pages = Array.from({ length: Math.min(pageCount, 5) }, (_, index) => (
-    <button>{index + 1}</button>
+    <button key={index + 1}>{index + 1}</button>
   ));
 
   return (
