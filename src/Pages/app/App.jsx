@@ -33,6 +33,14 @@ export function App() {
     return x;
   };
 
+  const pageCount = Math.floor(
+    pokemonLimit > 0 ? pokemonCount / pokemonLimit : 1
+  );
+
+  const pages = Array.from({ length: Math.min(pageCount, 5) }, (_, index) => (
+    <button>{index + 1}</button>
+  ));
+
   return (
     <Router>
       <div styleName="wrapper">
@@ -48,6 +56,9 @@ export function App() {
           >
             prev
           </button>
+          {pages}
+          <span>...</span>
+          <button>{pageCount}</button>
           <select
             value={pokemonLimit}
             onChange={(e) => {
