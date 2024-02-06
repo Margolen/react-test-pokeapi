@@ -1,5 +1,6 @@
 .card {
 	border: solid 1px black;
+	// background-color: #c2bebe;
 	padding: 0 5px;
 	display: flex;
 	justify-content: space-around;
@@ -27,4 +28,22 @@ padding-top: 10px;
 	width: 208px;
   height: 208px;
  	cursor: pointer;
+}
+
+.card__img:hover {
+	animation: opacity 0.4s ease-in-out;
+}
+
+@keyframes opacity{
+	0% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0.8;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }
