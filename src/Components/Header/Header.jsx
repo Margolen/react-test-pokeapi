@@ -1,6 +1,8 @@
 import { useState } from "react";
 import CSSModules from "react-css-modules";
 import style from "./style.module.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export const Header = () => {
   const [isOpen, setOpen] = useState();
@@ -18,7 +20,7 @@ export const Header = () => {
         </ul>
       </nav>
       <button styleName="header__menu-button" onClick={() => setOpen(!isOpen)}>
-        <faBars />
+        <FontAwesomeIcon icon={faBars} />
       </button>
     </header>
   );
