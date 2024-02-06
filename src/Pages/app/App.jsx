@@ -6,8 +6,8 @@ import Footer from "../../Components/Footer/Footer";
 import { BrowserRouter as Router } from "react-router-dom";
 import styles from "./style.module.scss";
 import ReactPaginate from "react-paginate";
-import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
-import { IconContext } from "react-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 
 export function App() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -49,20 +49,8 @@ export function App() {
             activeClassName={styles["active"]}
             containerClassName={styles["pagination"]}
             pageClassName={styles["page-item"]}
-            previousLabel={
-              <IconContext.Provider
-                value={{ color: "#B8C1CC", size: "1.5rem" }}
-              >
-                <AiFillLeftCircle />
-              </IconContext.Provider>
-            }
-            nextLabel={
-              <IconContext.Provider
-                value={{ color: "#B8C1CC", size: "1.5rem" }}
-              >
-                <AiFillRightCircle />
-              </IconContext.Provider>
-            }
+            previousLabel={<FontAwesomeIcon icon={faCaretLeft} />}
+            nextLabel={<FontAwesomeIcon icon={faCaretRight} />}
           />
         </div>
         <main>
