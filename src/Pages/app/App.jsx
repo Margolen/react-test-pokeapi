@@ -6,6 +6,8 @@ import Footer from "../../Components/Footer/Footer";
 import { BrowserRouter as Router } from "react-router-dom";
 import styles from "./style.module.scss";
 import ReactPaginate from "react-paginate";
+import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai"; // icons form react-icons
+import { IconContext } from "react-icons";
 
 export function App() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -36,18 +38,36 @@ export function App() {
     <Router>
       <div className={styles["wrapper"]}>
         <Header />
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          previousLabel="< previous"
-          pageCount={
-            pokemonLimit > 0 ? Math.ceil(pokemonCount / pokemonLimit) : 1
-          }
-          pageRangeDisplayed={5}
-          onPageChange={(event) => setPage(event.selected)}
-        />
+        <div className={styles["pagination__container"]}>
+          <ReactPaginate
+            breakLabel="..."
+            pageCount={
+              pokemonLimit > 0 ? Math.ceil(pokemonCount / pokemonLimit) : 1
+            }
+            pageRangeDisplayed={5}
+            onPageChange={(event) => setPage(event.selected)}
+            activeClassName={styles["active"]}
+            containerClassName={styles["pagination"]}
+            pageClassName={styles["page-item"]}
+            previousLabel={
+              <IconContext.Provider
+                value={{ color: "#B8C1CC", size: "1.5rem" }}
+              >
+                <AiFillLeftCircle />
+              </IconContext.Provider>
+            }
+            nextLabel={
+              <IconContext.Provider
+                value={{ color: "#B8C1CC", size: "1.5rem" }}
+              >
+                <AiFillRightCircle />
+              </IconContext.Provider>
+            }
+          />
+        </div>
         <main>
           <select
+            className={styles["select__page"]}
             value={pokemonLimit}
             onChange={(e) => {
               setPokemonLimit(e.target.value);
