@@ -4,8 +4,7 @@ import Header from "../../Components/Header/Header";
 import Card from "../../Components/Card/Card";
 import Footer from "../../Components/Footer/Footer";
 import { BrowserRouter as Router } from "react-router-dom";
-import CSSModules from "react-css-modules";
-import style from "./style.module.scss";
+import styles from "./style.module.scss";
 
 export function App() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -43,7 +42,7 @@ export function App() {
 
   return (
     <Router>
-      <div styleName="wrapper">
+      <div className={styles["wrapper"]}>
         <Header />
         <main>
           <button
@@ -78,7 +77,7 @@ export function App() {
           >
             next
           </button>
-          <div styleName="card__list">
+          <div className={styles["card__list"]}>
             {pokemonList.map((pokemon) => (
               <Card key={pokemon.url} url={pokemon.url} name={pokemon.name} />
             ))}
@@ -90,4 +89,4 @@ export function App() {
   );
 }
 
-export default CSSModules(App, style);
+export default App;

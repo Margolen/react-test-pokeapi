@@ -1,5 +1,4 @@
-import CSSModules from "react-css-modules";
-import style from "./style.module.scss";
+import styles from "./style.module.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -10,15 +9,14 @@ const Card = ({ name, url }) => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setPokemon(response.data);
-      //console.log(response);
     });
   }, [setPokemon]);
 
   return (
     pokemon && (
-      <div styleName="card">
+      <div className={styles["card"]}>
         <img
-          styleName="card__img"
+          className={styles["card__img"]}
           src={
             isFront
               ? pokemon.sprites.front_default
@@ -27,13 +25,13 @@ const Card = ({ name, url }) => {
           alt={name}
           onClick={() => setIsFront(!isFront)}
         />
-        <div className="card__info">
-          <h3 styleName="card__title">name: {name}</h3>
-          <p styleName="card__text">weight: {pokemon.weight}</p>
+        <div className={styles["card__info"]}>
+          <h3 className={styles["card__title"]}>name: {name}</h3>
+          <p className={styles["card__text"]}>weight: {pokemon.weight}</p>
         </div>
       </div>
     )
   );
 };
 
-export default CSSModules(Card, style);
+export default Card;
