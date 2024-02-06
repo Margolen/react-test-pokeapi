@@ -22,7 +22,6 @@ export function App() {
         },
       })
       .then((response) => {
-        console.log(response);
         setPokemonList(response.data.results);
         setPokemonCount(response.data.count);
       });
@@ -45,6 +44,7 @@ export function App() {
                 clamp(pokemonOffset - pokemonLimit, 0, pokemonCount)
               )
             }
+            disabled={pokemonOffset - pokemonLimit < 0}
           >
             prev
           </button>
@@ -63,6 +63,7 @@ export function App() {
                 clamp(pokemonOffset + pokemonLimit, 0, pokemonCount)
               )
             }
+            disabled={pokemonOffset + pokemonLimit >= pokemonCount}
           >
             next
           </button>

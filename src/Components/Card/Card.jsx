@@ -10,7 +10,7 @@ const Card = ({ name, url }) => {
   useEffect(() => {
     axios.get(url).then((response) => {
       setPokemon(response.data);
-      console.log(response);
+      //console.log(response);
     });
   }, [setPokemon]);
 
