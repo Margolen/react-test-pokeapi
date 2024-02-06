@@ -5,12 +5,14 @@ import Card from "../../Components/Card/Card";
 import Footer from "../../Components/Footer/Footer";
 import { BrowserRouter as Router } from "react-router-dom";
 import styles from "./style.module.scss";
+import ReactPaginate from "react-paginate";
 
 export function App() {
   const [pokemonList, setPokemonList] = useState([]);
   const [pokemonLimit, setPokemonLimit] = useState(20);
   const [pokemonOffset, setPokemonOffset] = useState(0);
   const [pokemonCount, setPokemonCount] = useState(0);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     axios
@@ -26,38 +28,25 @@ export function App() {
       });
   }, [setPokemonList, pokemonOffset, pokemonLimit]);
 
-  const clamp = (x, min, max) => {
-    if (x < min) return min;
-    if (x > max) return max;
-    return x;
-  };
-
-  const pageCount = Math.floor(
-    pokemonLimit > 0 ? pokemonCount / pokemonLimit : 1
-  );
-
-  const pages = Array.from({ length: Math.min(pageCount, 5) }, (_, index) => (
-    <button key={index + 1}>{index + 1}</button>
-  ));
+  useEffect(() => {
+    setPokemonOffset(page * pokemonLimit);
+  }, [setPokemonOffset, page, pokemonLimit]);
 
   return (
     <Router>
       <div className={styles["wrapper"]}>
         <Header />
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          previousLabel="< previous"
+          pageCount={
+            pokemonLimit > 0 ? Math.ceil(pokemonCount / pokemonLimit) : 1
+          }
+          pageRangeDisplayed={5}
+          onPageChange={(event) => setPage(event.selected)}
+        />
         <main>
-          <button
-            onClick={() =>
-              setPokemonOffset(
-                clamp(pokemonOffset - pokemonLimit, 0, pokemonCount)
-              )
-            }
-            disabled={pokemonOffset - pokemonLimit < 0}
-          >
-            prev
-          </button>
-          {pages}
-          <span>...</span>
-          <button>{pageCount}</button>
           <select
             value={pokemonLimit}
             onChange={(e) => {
@@ -67,16 +56,6 @@ export function App() {
             <option value="20">20</option>
             <option value="30">30</option>
           </select>
-          <button
-            onClick={() =>
-              setPokemonOffset(
-                clamp(pokemonOffset + pokemonLimit, 0, pokemonCount)
-              )
-            }
-            disabled={pokemonOffset + pokemonLimit >= pokemonCount}
-          >
-            next
-          </button>
           <div className={styles["card__list"]}>
             {pokemonList.map((pokemon) => (
               <Card key={pokemon.url} url={pokemon.url} name={pokemon.name} />
