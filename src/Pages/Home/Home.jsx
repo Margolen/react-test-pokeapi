@@ -130,15 +130,13 @@ export const Home = () => {
           />
         </div>
       </div>
-      <main>
-        <div className={styles["card__list"]}>
-          {pokemonList.map((pokemon) => (
-            <Suspense key={pokemon.url} fallback={<div>Loading...</div>}>
-              <Card url={pokemon.url} name={pokemon.name} />
-            </Suspense>
-          ))}
-        </div>
-      </main>
+      <div className={styles["card__list"]}>
+        {pokemonList.map((pokemon) => (
+          <Suspense key={pokemon.url} fallback={<div>Loading...</div>}>
+            <Card url={pokemon.url} name={pokemon.name} />
+          </Suspense>
+        ))}
+      </div>
     </>
   );
 };

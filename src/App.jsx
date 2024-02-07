@@ -10,11 +10,13 @@ export function App() {
     <BrowserRouter>
       <div className={styles["wrapper"]}>
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/page/:pageId" element={<Home />} />
-          <Route path="/pokemon/:pokemonId" element={<PokemonCard />} />
-        </Routes>
+        <div className={styles["main"]}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/page/:pageId" element={<Home />} />
+            <Route path="/pokemon/:pokemonId" element={<PokemonCard />} />
+          </Routes>
+        </div>
         <Footer />
       </div>
     </BrowserRouter>
