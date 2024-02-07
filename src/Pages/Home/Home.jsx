@@ -1,8 +1,6 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import Card from "../../Components/Card/Card";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -79,8 +77,7 @@ export const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={styles["wrapper"]}>
-      <Header />
+    <>
       <div className={styles["pagination__container"]}>
         <ReactPaginate
           breakLabel="..."
@@ -138,7 +135,6 @@ export const Home = () => {
           ))}
         </div>
       </main>
-      <Footer />
-    </div>
+    </>
   );
 };
