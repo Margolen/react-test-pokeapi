@@ -6,7 +6,6 @@ $color-primary-white: rgb(180, 77, 77);
   justify-content: center;
   align-items: center;
   padding: 2em;
-  font-family: 'Roboto', sans-serif;
 }
 
 .card__traits{
@@ -48,7 +47,6 @@ $color-primary-white: rgb(180, 77, 77);
     inset: auto auto 2em 30px;
     margin: 0;
     transition: inset .3s .3s ease-out;
-    font-family: 'Roboto Condensed', sans-serif;
     font-weight: 900;
     text-transform: uppercase;
   }
