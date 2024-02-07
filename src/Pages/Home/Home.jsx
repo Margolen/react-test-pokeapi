@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense, lazy } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-import Card from "../../Components/Card/Card";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
@@ -47,6 +46,7 @@ export const Home = () => {
   }, [setPage, pageId]);
 
   const navigate = useNavigate();
+  const Card = lazy(() => import("../../Components/Card/Card"));
 
   return (
     <div className={styles["wrapper"]}>
@@ -83,7 +83,9 @@ export const Home = () => {
       <main>
         <div className={styles["card__list"]}>
           {pokemonList.map((pokemon) => (
-            <Card key={pokemon.url} url={pokemon.url} name={pokemon.name} />
+            <Suspense key={pokemon.url} fallback={<div>Loading...</div>}>
+              <Card url={pokemon.url} name={pokemon.name} />
+            </Suspense>
           ))}
         </div>
       </main>
