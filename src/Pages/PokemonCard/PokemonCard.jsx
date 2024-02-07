@@ -31,7 +31,7 @@ export const PokemonCard = () => {
                   ? pokemon.sprites.front_default
                   : pokemon.sprites.back_default
               }
-              alt={name}
+              alt={pokemon.name}
               onClick={() => setIsFront(!isFront)}
             />
             <div className={styles["card__content"]}>
@@ -46,6 +46,14 @@ export const PokemonCard = () => {
                 <p className={styles["title"]}>
                   Weight: <span>{pokemon.weight}</span>
                 </p>
+              </div>
+              <div className={styles["card__abilities"]}>
+                <ul>
+                  {pokemon.abilities &&
+                    pokemon.abilities.map((item) => (
+                      <li key={item.ability.url}>{item.ability.name}</li>
+                    ))}
+                </ul>
               </div>
             </div>
           </div>
