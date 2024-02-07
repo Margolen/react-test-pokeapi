@@ -1,10 +1,11 @@
 import styles from "./style.module.scss";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const Card = ({ name, url }) => {
   const [pokemon, setPokemon] = useState(null);
-  const [isFront, setIsFront] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(url).then((response) => {
@@ -17,13 +18,9 @@ const Card = ({ name, url }) => {
       <div className={styles["card"]}>
         <img
           className={styles["card__img"]}
-          src={
-            isFront
-              ? pokemon.sprites.front_default
-              : pokemon.sprites.back_default
-          }
+          src={pokemon.sprites.front_default}
           alt={name}
-          onClick={() => setIsFront(!isFront)}
+          onClick={() => navigate("/pokemon/" + pokemon.id)}
         />
         <div className={styles["card__info"]}>
           <h3 className={styles["card__title"]}>name: {name}</h3>
