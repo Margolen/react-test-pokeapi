@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
+import Card from "../../Components/Card/Card";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
@@ -16,22 +17,52 @@ export const Home = () => {
   const [pokemonOffset, setPokemonOffset] = useState(null);
   const [pokemonCount, setPokemonCount] = useState(0);
   const [page, setPage] = useState(-1);
+  const [isSearchEnabled, setSearchEnabled] = useState(false);
+
+  const requestPokemons = (limit, offset) => {
+    setSearchEnabled(false);
+    axios
+      .get("https://pokeapi.co/api/v2/pokemon/", {
+        params: {
+          limit: limit,
+          offset: offset,
+        },
+      })
+      .then((response) => {
+        setPokemonList(response.data.results);
+        setPokemonCount(response.data.count);
+      });
+  };
+
+  const handleOnPokemonSearchChanged = (value) => {
+    setTimeout(() => {
+      if (value !== "") {
+        setSearchEnabled(true);
+        axios
+          .get("https://pokeapi.co/api/v2/pokemon/", {
+            params: {
+              limit: -1,
+              offset: 0,
+            },
+          })
+          .then((response) => {
+            const newPokemonList = response.data.results.filter((pokemon) =>
+              pokemon.name.toLowerCase().includes(value.toLowerCase())
+            );
+            setPokemonList(newPokemonList);
+            setPokemonCount(response.data.count);
+          });
+      } else {
+        requestPokemons(pokemonLimit, pokemonOffset);
+      }
+    }, 500);
+  };
 
   useEffect(() => {
     if (pokemonOffset !== null) {
-      axios
-        .get("https://pokeapi.co/api/v2/pokemon/", {
-          params: {
-            limit: pokemonLimit,
-            offset: pokemonOffset,
-          },
-        })
-        .then((response) => {
-          setPokemonList(response.data.results);
-          setPokemonCount(response.data.count);
-        });
+      requestPokemons(pokemonLimit, pokemonOffset);
     }
-  }, [setPokemonList, pokemonOffset, pokemonLimit]);
+  }, [pokemonLimit, pokemonOffset]);
 
   useEffect(() => {
     setPokemonOffset(page * pokemonLimit);
@@ -46,7 +77,6 @@ export const Home = () => {
   }, [setPage, pageId]);
 
   const navigate = useNavigate();
-  const Card = lazy(() => import("../../Components/Card/Card"));
 
   return (
     <div className={styles["wrapper"]}>
@@ -60,13 +90,23 @@ export const Home = () => {
           pageRangeDisplayed={5}
           onPageChange={(event) => navigate("/page/" + (event.selected + 1))}
           activeClassName={styles["active"]}
-          containerClassName={styles["pagination"]}
+          containerClassName={
+            isSearchEnabled
+              ? styles["pagination"] + " " + styles["deactivated"]
+              : styles["pagination"]
+          }
           pageClassName={styles["page-item"]}
           previousLabel={<FontAwesomeIcon icon={faCaretLeft} />}
           nextLabel={<FontAwesomeIcon icon={faCaretRight} />}
           forcePage={page}
         />
-        <div className={styles["select__page"]}>
+        <div
+          className={
+            isSearchEnabled
+              ? styles["select__page"] + " " + styles["deactivated"]
+              : styles["select__page"]
+          }
+        >
           <p>Pokemons per page: </p>
           <select
             className={styles["select__list"]}
@@ -78,6 +118,15 @@ export const Home = () => {
             <option value="20">20</option>
             <option value="30">30</option>
           </select>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Pokemon name"
+            onChange={(event) =>
+              handleOnPokemonSearchChanged(event.target.value)
+            }
+          />
         </div>
       </div>
       <main>

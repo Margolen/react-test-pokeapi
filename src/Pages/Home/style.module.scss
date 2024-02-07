@@ -34,6 +34,10 @@ main{
   cursor: pointer;
 }
 
+.deactivated {
+	visibility: hidden;
+}
+
 .active{
   background-color: #EF5350;
   border-radius: 50%;
