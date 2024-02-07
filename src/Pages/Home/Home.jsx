@@ -16,6 +16,7 @@ export const Home = () => {
   const [pokemonCount, setPokemonCount] = useState(0);
   const [page, setPage] = useState(-1);
   const [isSearchEnabled, setSearchEnabled] = useState(false);
+  const [fullPokemonList, setFullPokemonList] = useState([]);
 
   const requestPokemons = (limit, offset) => {
     setSearchEnabled(false);
@@ -36,25 +37,28 @@ export const Home = () => {
     setTimeout(() => {
       if (value !== "") {
         setSearchEnabled(true);
-        axios
-          .get("https://pokeapi.co/api/v2/pokemon/", {
-            params: {
-              limit: -1,
-              offset: 0,
-            },
-          })
-          .then((response) => {
-            const newPokemonList = response.data.results.filter((pokemon) =>
-              pokemon.name.toLowerCase().includes(value.toLowerCase())
-            );
-            setPokemonList(newPokemonList);
-            setPokemonCount(response.data.count);
-          });
+        const newPokemonList = fullPokemonList.filter((pokemon) =>
+          pokemon.name.toLowerCase().includes(value.toLowerCase())
+        );
+        setPokemonList(newPokemonList);
       } else {
         requestPokemons(pokemonLimit, pokemonOffset);
       }
     }, 500);
   };
+
+  useEffect(() => {
+    axios
+      .get("https://pokeapi.co/api/v2/pokemon/", {
+        params: {
+          limit: -1,
+          offset: 0,
+        },
+      })
+      .then((response) => {
+        setFullPokemonList(response.data.results);
+      });
+  }, []);
 
   useEffect(() => {
     if (pokemonOffset !== null) {
