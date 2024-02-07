@@ -1,3 +1,30 @@
 .footer{
 	font-size: 12px;
+	background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+
+	a{
+		text-decoration: none;
+		border-bottom: 0.2em #EF5350 solid;
+		font-style: oblique;
+		
+			&:visited{
+				border-bottom: 0.2em #fff solid;
+			}
+	}
+}
+
+@media (max-width: 767px){
+	.footer-contact {
+			width: 50%;
+			margin-bottom: 20px;
+	}
+}
+
+@media(max-width: 576px){
+  .footer-contact {
+    width: 100%;
+	}
 }
