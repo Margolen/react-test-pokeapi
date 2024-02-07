@@ -8,7 +8,7 @@ export const Header = () => {
 
   return (
     <header className={styles["header"]}>
-      <a href="#" className={styles["header__logo"]}>
+      <a href="/" className={styles["header__logo"]}>
         <img src="/assets/logo.png" alt="home" />
       </a>
       <nav
@@ -19,9 +19,12 @@ export const Header = () => {
         }
       >
         <ul className={styles["header__nav-list"]}>
-          <li className={styles["header__nav-item"]}>Home</li>
-          <li className={styles["header__nav-item"]}>About</li>
-          <li className={styles["header__nav-item"]}>Contacts</li>
+          <li className={styles["header__nav-item"]}>
+            <a href="/">Home</a>
+          </li>
+          <li disabled={true} className={styles["header__nav-item"]}>
+            About
+          </li>
         </ul>
       </nav>
       <button
