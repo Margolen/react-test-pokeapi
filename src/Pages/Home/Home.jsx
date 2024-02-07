@@ -66,18 +66,21 @@ export const Home = () => {
           nextLabel={<FontAwesomeIcon icon={faCaretRight} />}
           forcePage={page}
         />
+        <div className={styles["select__page"]}>
+          <p>Pokemons per page: </p>
+          <select
+            className={styles["select__list"]}
+            value={pokemonLimit}
+            onChange={(e) => {
+              setPokemonLimit(e.target.value);
+            }}
+          >
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </select>
+        </div>
       </div>
       <main>
-        <select
-          className={styles["select__page"]}
-          value={pokemonLimit}
-          onChange={(e) => {
-            setPokemonLimit(e.target.value);
-          }}
-        >
-          <option value="20">20</option>
-          <option value="30">30</option>
-        </select>
         <div className={styles["card__list"]}>
           {pokemonList.map((pokemon) => (
             <Card key={pokemon.url} url={pokemon.url} name={pokemon.name} />
