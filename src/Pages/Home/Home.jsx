@@ -6,17 +6,21 @@ import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setPokemons } from "../../Features/pokemonSlice";
 
 export const Home = () => {
   const { pageId } = useParams();
 
-  const [pokemonList, setPokemonList] = useState([]);
   const [pokemonLimit, setPokemonLimit] = useState(20);
   const [pokemonOffset, setPokemonOffset] = useState(null);
   const [pokemonCount, setPokemonCount] = useState(0);
   const [page, setPage] = useState(-1);
   const [isSearchEnabled, setSearchEnabled] = useState(false);
   const [fullPokemonList, setFullPokemonList] = useState([]);
+
+  const pokemons = useSelector((state) => state.pokemons.value);
+  const dispatch = useDispatch();
 
   const requestPokemons = (limit, offset) => {
     setSearchEnabled(false);
@@ -28,7 +32,7 @@ export const Home = () => {
         },
       })
       .then((response) => {
-        setPokemonList(response.data.results);
+        dispatch(setPokemons(response.data.results));
         setPokemonCount(response.data.count);
       });
   };
@@ -40,7 +44,7 @@ export const Home = () => {
         const newPokemonList = fullPokemonList.filter((pokemon) =>
           pokemon.name.toLowerCase().includes(value.toLowerCase())
         );
-        setPokemonList(newPokemonList);
+        dispatch(setPokemons(newPokemonList));
       } else {
         requestPokemons(pokemonLimit, pokemonOffset);
       }
@@ -131,11 +135,13 @@ export const Home = () => {
         </div>
       </div>
       <div className={styles["card__list"]}>
-        {pokemonList.map((pokemon) => (
-          <Suspense key={pokemon.url} fallback={<div>Loading...</div>}>
-            <Card url={pokemon.url} name={pokemon.name} />
-          </Suspense>
-        ))}
+        {pokemons &&
+          pokemons.payload &&
+          pokemons.payload.map((pokemon) => (
+            <Suspense key={pokemon.url} fallback={<div>Loading...</div>}>
+              <Card url={pokemon.url} name={pokemon.name} />
+            </Suspense>
+          ))}
       </div>
     </>
   );
