@@ -1,13 +1,13 @@
 import { useState, useEffect, Suspense, lazy } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import Card from "../../Components/Card/Card";
 import styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setPokemons, updatePokemonsAsync } from "../../Features/pokemonSlice";
+import CardSkeleton from "../../Components/CardSkeleton/CardSkeleton";
 
 export const Home = () => {
   const { pageId } = useParams();
@@ -74,6 +74,11 @@ export const Home = () => {
   }, [setPage, pageId]);
 
   const navigate = useNavigate();
+  const isLoaded = () => {
+    return pokemons && pokemons.payload;
+  };
+
+  const SuspendedCard = lazy(() => import("../../Components/Card/Card"));
 
   return (
     <>
@@ -128,11 +133,10 @@ export const Home = () => {
         </div>
       </div>
       <div className={styles["card__list"]}>
-        {pokemons &&
-          pokemons.payload &&
+        {isLoaded() &&
           pokemons.payload.map((pokemon) => (
-            <Suspense key={pokemon.url} fallback={<div>Loading...</div>}>
-              <Card url={pokemon.url} name={pokemon.name} />
+            <Suspense key={pokemon.url} fallback={<CardSkeleton />}>
+              <SuspendedCard url={pokemon.url} name={pokemon.name} />
             </Suspense>
           ))}
       </div>
