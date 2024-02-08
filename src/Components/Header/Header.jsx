@@ -23,7 +23,7 @@ export const Header = () => {
             <a href="/">Home</a>
           </li>
           <li disabled={true} className={styles["header__nav-item"]}>
-            About
+            <a href="https://pokeapi.co/">Poke API</a>
           </li>
         </ul>
       </nav>
