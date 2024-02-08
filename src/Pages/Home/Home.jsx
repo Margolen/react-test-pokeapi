@@ -7,34 +7,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretRight, faCaretLeft } from "@fortawesome/free-solid-svg-icons";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setPokemons } from "../../Features/pokemonSlice";
+import { setPokemons, updatePokemonsAsync } from "../../Features/pokemonSlice";
 
 export const Home = () => {
   const { pageId } = useParams();
 
   const [pokemonLimit, setPokemonLimit] = useState(20);
   const [pokemonOffset, setPokemonOffset] = useState(null);
-  const [pokemonCount, setPokemonCount] = useState(0);
   const [page, setPage] = useState(-1);
   const [isSearchEnabled, setSearchEnabled] = useState(false);
   const [fullPokemonList, setFullPokemonList] = useState([]);
 
   const pokemons = useSelector((state) => state.pokemons.value);
+  const pokemonCount = useSelector((state) => state.pokemons.count);
+
   const dispatch = useDispatch();
 
   const requestPokemons = (limit, offset) => {
     setSearchEnabled(false);
-    axios
-      .get("https://pokeapi.co/api/v2/pokemon/", {
-        params: {
-          limit: limit,
-          offset: offset,
-        },
-      })
-      .then((response) => {
-        dispatch(setPokemons(response.data.results));
-        setPokemonCount(response.data.count);
-      });
+    dispatch(updatePokemonsAsync(offset, limit));
   };
 
   const handleOnPokemonSearchChanged = (value) => {
@@ -90,7 +81,9 @@ export const Home = () => {
         <ReactPaginate
           breakLabel="..."
           pageCount={
-            pokemonLimit > 0 ? Math.ceil(pokemonCount / pokemonLimit) : 1
+            pokemonLimit > 0 && pokemonCount.payload
+              ? Math.ceil(pokemonCount.payload / pokemonLimit)
+              : 1
           }
           pageRangeDisplayed={5}
           onPageChange={(event) => navigate("/page/" + (event.selected + 1))}
