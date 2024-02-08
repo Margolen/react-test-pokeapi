@@ -42,3 +42,11 @@ padding-top: 10px;
 		opacity: 0.8;
 	}
 }
+
+@media(max-width: 665px){
+  .card__img {
+    width: 64px;
+		height: 64px;
+	}
+}
+
