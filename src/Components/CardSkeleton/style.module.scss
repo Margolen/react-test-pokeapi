@@ -1,0 +1,22 @@
+.card{
+	border: solid 1px black;
+	padding: 0 5px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	width: 50%;
+	margin: 1em;
+	border-radius: 10px;
+	height: 300px;
+}
+
+@media (max-width: 800px) {
+	.card__img{
+		display: none;
+	}
+}
+
+.card__content{
+	display: grid;
+	gap: 20px;
+}
