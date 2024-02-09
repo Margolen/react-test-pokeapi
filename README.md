@@ -1,4 +1,4 @@
-## Project Name: Pokemon Explorer
+## Pokemon Explorer
 
 ### Description:
 
@@ -23,7 +23,7 @@ The application features a search functionality by Pokemon name with a 0.5-secon
 - Normalize.css for consistent cross-browser styling
 - React Router for navigation
 - react-paginate for pagination
-- React.Lazy + React.Suspense for code splitting and lazy loading
+- React.Lazy + React.Suspense 
 - Vite
 
 ### Setup:
